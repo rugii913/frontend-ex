@@ -1,6 +1,6 @@
 import './App.css'; // 위와 마찬가지로 순수 JS에서는 CSS 파일을 이런 식으로 가져오지 못함
 import { CORE_CONCEPTS } from './data.js';
-import Header from './components/Header.jsx';
+import Header from './components/Header/Header.jsx';
 import CoreConcept from './components/CoreConcept.jsx';
 
 function App() {
