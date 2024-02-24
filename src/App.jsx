@@ -1,5 +1,11 @@
 import logo from './logo.svg';
-import './App.css';
+// - 아래 img 태그를 보면 HTML의 attribute에도 {}를 활용할 수 있음, 태그안에만 넣을 수 있는 게 아님
+// - 만약 이 경로를 src attribute에 하드 코딩하게 되면 배포 과정에서 이미지가 유실될 수 있으며, 최적화되지 않는다.
+// - 참고로 여기서 이미지 파일을 직접 가져오는 것처럼 보이는데,
+//   - 실제로 가져온다기보다는 빌드 과정에서 해결해준다고 보면 된다.
+//   - 순수 JS를 사용한다면 이런 것은 불가능함
+// - 아무튼 React에서는 이런 방식으로 이미지를 변수처럼 받아서 코드에서 활용할 수 있음
+import './App.css'; // 위와 마찬가지로 순수 JS에서는 CSS 파일을 이런 식으로 가져오지 못함
 
 const reactDescriptions = ["Fundamental", "Crucial", "Core"];
 
