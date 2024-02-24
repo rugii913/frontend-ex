@@ -4,12 +4,17 @@ import './index.css';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// CRA 자동 생성 스타일
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+
+// 강의 스타일 - Vite 자동 생성 스타일로 추청
+const entryPoint = document.getElementById("root");
+ReactDOM.createRoot(entryPoint).render(<App />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
