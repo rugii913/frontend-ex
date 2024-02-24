@@ -6,7 +6,7 @@ import logo from './logo.svg';
 //   - 순수 JS를 사용한다면 이런 것은 불가능함
 // - 아무튼 React에서는 이런 방식으로 이미지를 변수처럼 받아서 코드에서 활용할 수 있음
 import './App.css'; // 위와 마찬가지로 순수 JS에서는 CSS 파일을 이런 식으로 가져오지 못함
-import componentsImg from './assets/components.png'
+import { CORE_CONCEPTS } from './data.js';
 
 const reactDescriptions = ["Fundamental", "Crucial", "Core"];
 
@@ -57,13 +57,25 @@ function App() {
           <h2>Core Concepts</h2>
           <ul>
             <CoreConcept
-              title="Components"
-              description="The core UI building block."
-              image={componentsImg}
+              title={CORE_CONCEPTS[0].title}
+              description={CORE_CONCEPTS[0].description}
+              image={CORE_CONCEPTS[0].image}
             />
-            <CoreConcept title="Props" />
-            <CoreConcept />
-            <CoreConcept />
+            <CoreConcept
+              title={CORE_CONCEPTS[1].title}
+              description={CORE_CONCEPTS[1].description}
+              image={CORE_CONCEPTS[1].image}
+            />
+            <CoreConcept
+              title={CORE_CONCEPTS[2].title}
+              description={CORE_CONCEPTS[2].description}
+              image={CORE_CONCEPTS[2].image}
+            />
+            <CoreConcept
+              title={CORE_CONCEPTS[3].title}
+              description={CORE_CONCEPTS[3].description}
+              image={CORE_CONCEPTS[3].image}
+            />
           </ul>
         </section>
       </main>
