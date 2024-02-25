@@ -56,10 +56,12 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            {" "}
             {/* menu는 기본 html 요소 태그임 */}
             {/* <TabButton children="ABCD"></TabButton> 아무 작업도 하지 않아도 children은 받으므로 부자연스럽게 attribute로 넘기지 말 것 */}
-            <TabButton onSelect={() => handleSelect("components")}>
+            <TabButton
+              isSelected={selectedTopic === "components"}
+              onSelect={() => handleSelect("components")}
+            >
               {/* 
               강의: 이벤트 함수에 커스텀 인자 전달하기 및 퀴즈 3 - 질문 5 관련
                 - 퀴즈: 이벤트로부터 독립적인 함수는 어떻게 “구성 및 설정”할 수 있습니까? (예: 어떤 인자를 전달할지 정의하는 등) 
@@ -70,16 +72,32 @@ function App() {
                   - 이렇게 함으로써 함수를 바로 실행하지 않으면서도 함수 호출 시 넘길 인자를 정해줄 수 있다.
               */}
               Components
-            </TabButton>{" "}
+            </TabButton>
             {/* 컴포넌트 합성(composition)의 한 예시로 볼 수 있음 */}
-            <TabButton onSelect={() => handleSelect("jsx")}>JSX</TabButton>
-            <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
-            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
+            <TabButton
+              isSelected={selectedTopic === "jsx"}
+              onSelect={() => handleSelect("jsx")}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "props"}
+              onSelect={() => handleSelect("props")}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "state"}
+              onSelect={() => handleSelect("state")}
+            >
+              State
+            </TabButton>
             {/* children prop vs. attribute props: 렌더링 결과는 같게 만들 수 있다. (강의 - 컴포넌트 구성 7:00 경)
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
-          {tabContent} {/* 조건부 렌더링 세 가지 방법 중 어떤 것을 사용할 것이냐는 선택의 문제 */}
+          {tabContent}{" "}
+          {/* 조건부 렌더링 세 가지 방법 중 어떤 것을 사용할 것이냐는 선택의 문제 */}
         </section>
       </main>
     </div>

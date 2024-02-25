@@ -1,4 +1,4 @@
-export default function TabButton({ children, onSelect }) {
+export default function TabButton({ children, onSelect, isSelected }) {
     // - children은 component의 특별한 prop
     //   - 아무 작업도 하지 않아도 children은 사실 받고 있다. 그러니 컴포넌트 태그에 일부러 children attribute를 명시하면 안 됨.
     //   - 단순 텍스트를 넘길 수도 있고, JSX 구조가 들어올 수도 있다.
@@ -13,8 +13,9 @@ export default function TabButton({ children, onSelect }) {
 
     return (
       <li>
-        <button onClick={onSelect}>{children}</button>  {/* 파라미터에서 구조 분해를 사용하지 않는 경우 props.children으로 사용하면 된다. */}
+        <button className={isSelected ? "active" : undefined} onClick={onSelect}>{children}</button>  {/* 파라미터에서 구조 분해를 사용하지 않는 경우 props.children으로 사용하면 된다. */}
         {/* 리액트에서는 해당 요소에 이벤트 리스너를 걸지 않고, attribute로 이벤트 리스너와 관련된 특별한 prop들을 추가해준다.*/}
+        {/* 클래스는 class=.. 가 아니라 className prop을 이용하여 부여한다. */}
       </li>
     );
 }
