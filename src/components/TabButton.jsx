@@ -1,4 +1,4 @@
-export default function TabButton({ children }) {
+export default function TabButton({ children, onSelect }) {
     // - children은 component의 특별한 prop
     //   - 아무 작업도 하지 않아도 children은 사실 받고 있다. 그러니 컴포넌트 태그에 일부러 children attribute를 명시하면 안 됨.
     //   - 단순 텍스트를 넘길 수도 있고, JSX 구조가 들어올 수도 있다.
@@ -9,16 +9,9 @@ export default function TabButton({ children }) {
     // 바닐라 JS처럼 위와 같은 방식은 사용 지양, 리액트로 작업할 때는 DOM과 직접 상호작용하는 명령형 코드를 작성하지 않는다.
     // DOM과의 상호작용은 리액트에게 맡긴다.
 
-    function handleClick() {
-        // JS 문법: 함수 내에서 정의된 로컬 함수 가능
-        // - component function 내에 event handler function을 정의했을 때의 장점은 
-        // - component의 props와 state에 접근할 수 있다는 점
-        console.log("Hello world!")
-    }
-
     return (
       <li>
-        <button onClick={handleClick}>{children}</button>  {/* 파라미터에서 구조 분해를 사용하지 않는 경우 props.children으로 사용하면 된다. */}
+        <button onClick={onSelect}>{children}</button>  {/* 파라미터에서 구조 분해를 사용하지 않는 경우 props.children으로 사용하면 된다. */}
         {/* 리액트에서는 해당 요소에 이벤트 리스너를 걸지 않고, attribute로 이벤트 리스너와 관련된 특별한 prop들을 추가해준다.*/}
       </li>
     );
