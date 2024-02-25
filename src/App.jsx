@@ -1,4 +1,4 @@
-import { useState } from 'react'; // useState React hook 추가
+import { useState, Fragment } from 'react'; // useState React hook 추가
 
 import './App.css'; // 위와 마찬가지로 순수 JS에서는 CSS 파일을 이런 식으로 가져오지 못함
 import { CORE_CONCEPTS } from './data.js';
@@ -41,7 +41,13 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <Fragment className="App">
+      {/* 위처럼 className 같은 게 주어져 있지 않다면, 최신 React에서는 빈 태그 <> </>를 이용할 수도 있다. */}
+      {/*
+      - 원래 코드가 div 태그로 감싸져있었던 이유
+        - JSX 문법을 return (React.createElement(Header) React.createElement('main')) 이라고 생각해보면 할 수 있다.
+        - JS는 두 개의 값을 return 할 수 없다.
+      */}
       <Header />
       <main>
         <section id="core-concepts">
@@ -99,7 +105,7 @@ function App() {
           {/* 조건부 렌더링 세 가지 방법 중 어떤 것을 사용할 것이냐는 선택의 문제 */}
         </section>
       </main>
-    </div>
+    </Fragment>
   );
 }
 
