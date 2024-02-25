@@ -65,9 +65,10 @@ function App() {
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
-          {!selectedTopic ? (
-            <p>Please select a topic.</p>
-          ) : (
+          {/* 두 개의 동적인 부분으로 분리, 삼항 연산자 대신 논리 연산자 && 사용 */}
+          {/* JS 문법 tricky한 방법 - 조건이 사실이라면 AND 연산자가 뒤의 값을 보냄 - https://code-lab1.tistory.com/392 참고 */}
+          {!selectedTopic && <p>Please select a topic.</p>} 
+          {selectedTopic && (
             <div id="tab-content">
               <h3>{EXAMPLES[selectedTopic].title}</h3>
               <p>{EXAMPLES[selectedTopic].description}</p>
