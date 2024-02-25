@@ -5,12 +5,16 @@ import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
 
 function App() {
+  let tabContent = "Please click a button";
+
   function handleSelect(selectedButton) {
     // JS 문법: 함수 내에서 정의된 로컬 함수 가능
     // - component function 내에 event handler function을 정의했을 때의 장점은 
     // - component의 props와 state에 접근할 수 있다는 점
-    console.log(selectedButton)
+    tabContent =selectedButton;
   }
+
+  console.log("APP COMPONENT EXECUTING");
 
   return (
     <div className="App">
@@ -54,6 +58,7 @@ function App() {
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
+          {tabContent}
         </section>
       </main>
     </div>

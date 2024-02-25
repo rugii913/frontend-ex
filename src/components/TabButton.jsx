@@ -9,6 +9,8 @@ export default function TabButton({ children, onSelect }) {
     // 바닐라 JS처럼 위와 같은 방식은 사용 지양, 리액트로 작업할 때는 DOM과 직접 상호작용하는 명령형 코드를 작성하지 않는다.
     // DOM과의 상호작용은 리액트에게 맡긴다.
 
+    console.log("TAP BUTTON COMPONENT EXECUTING");
+
     return (
       <li>
         <button onClick={onSelect}>{children}</button>  {/* 파라미터에서 구조 분해를 사용하지 않는 경우 props.children으로 사용하면 된다. */}
