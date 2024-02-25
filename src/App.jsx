@@ -5,6 +5,7 @@ import { CORE_CONCEPTS } from './data.js';
 import Header from './components/Header/Header.jsx';
 import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
+import { EXAMPLES } from './data.js';
 
 function App() {
   // 1. hook은 컴포넌트 함수의 안 혹은 커스텀 hook 안에서만 호출될 수 있음
@@ -13,7 +14,7 @@ function App() {
   // useState는 두 개의 element로 이뤄진 배열을 반환한다.
   // [0]: 컴포넌트 실행 주기의 현재 데이터 스냅샷
   // [1]: state를 업데이트해주는 함수 - 이 컴포넌트 함수를 다시 호출해야한다고 알려주는 역할까지 한다.
-  const [ selectedTopic, setSelectedTopic ] = useState("Please click a button"); // useState(..) ..에 넘기는 값은 기본값으로 사용할 값
+  const [ selectedTopic, setSelectedTopic ] = useState("components"); // useState(..) ..에 넘기는 값은 기본값으로 사용할 값
 
   function handleSelect(selectedButton) {
     // JS 문법: 함수 내에서 정의된 로컬 함수 가능
@@ -67,7 +68,13 @@ function App() {
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
-          {selectedTopic}
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedTopic].code}</code>
+            </pre>
+          </div>
         </section>
       </main>
     </div>
