@@ -14,7 +14,7 @@ function App() {
   // useState는 두 개의 element로 이뤄진 배열을 반환한다.
   // [0]: 컴포넌트 실행 주기의 현재 데이터 스냅샷
   // [1]: state를 업데이트해주는 함수 - 이 컴포넌트 함수를 다시 호출해야한다고 알려주는 역할까지 한다.
-  const [ selectedTopic, setSelectedTopic ] = useState(); // useState(..) ..에 넘기는 값은 기본값으로 사용할 값
+  const [selectedTopic, setSelectedTopic] = useState(); // useState(..) ..에 넘기는 값은 기본값으로 사용할 값
 
   function handleSelect(selectedButton) {
     // JS 문법: 함수 내에서 정의된 로컬 함수 가능
@@ -25,6 +25,20 @@ function App() {
   }
 
   console.log("APP COMPONENT EXECUTING");
+
+  let tabContent = <p>Please select a topic.</p>; // 상태가 아님에 유의
+
+  if (selectedTopic) { // JSX 코드를 반환하기 전에 변수를 설정
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
@@ -65,18 +79,7 @@ function App() {
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
-          {/* 두 개의 동적인 부분으로 분리, 삼항 연산자 대신 논리 연산자 && 사용 */}
-          {/* JS 문법 tricky한 방법 - 조건이 사실이라면 AND 연산자가 뒤의 값을 보냄 - https://code-lab1.tistory.com/392 참고 */}
-          {!selectedTopic && <p>Please select a topic.</p>} 
-          {selectedTopic && (
-            <div id="tab-content">
-              <h3>{EXAMPLES[selectedTopic].title}</h3>
-              <p>{EXAMPLES[selectedTopic].description}</p>
-              <pre>
-                <code>{EXAMPLES[selectedTopic].code}</code>
-              </pre>
-            </div>
-          )}
+          {tabContent} {/* 조건부 렌더링 세 가지 방법 중 어떤 것을 사용할 것이냐는 선택의 문제 */}
         </section>
       </main>
     </div>
