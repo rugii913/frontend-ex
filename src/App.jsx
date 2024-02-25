@@ -1,3 +1,5 @@
+import { useState } from 'react'; // useState React hook 추가
+
 import './App.css'; // 위와 마찬가지로 순수 JS에서는 CSS 파일을 이런 식으로 가져오지 못함
 import { CORE_CONCEPTS } from './data.js';
 import Header from './components/Header/Header.jsx';
@@ -5,13 +7,20 @@ import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
 
 function App() {
-  let tabContent = "Please click a button";
+  // 1. hook은 컴포넌트 함수의 안 혹은 커스텀 hook 안에서만 호출될 수 있음
+  // 2. hook은 컴포넌트 함수의 최상위에서 호출해야함 - 다른 함수 혹은 if, loop statement 안에 들어가 있으면 안 됨
+  // hook으로 연결된 데이터가 변경되면 이 hook이 자신이 속한 컴포넌트 함수를 다시 실행하도록 리액트에게 알림
+  // useState는 두 개의 element로 이뤄진 배열을 반환한다.
+  // [0]: 컴포넌트 실행 주기의 현재 데이터 스냅샷
+  // [1]: state를 업데이트해주는 함수 - 이 컴포넌트 함수를 다시 호출해야한다고 알려주는 역할까지 한다.
+  const [ selectedTopic, setSelectedTopic ] = useState("Please click a button"); // useState(..) ..에 넘기는 값은 기본값으로 사용할 값
 
   function handleSelect(selectedButton) {
     // JS 문법: 함수 내에서 정의된 로컬 함수 가능
     // - component function 내에 event handler function을 정의했을 때의 장점은 
     // - component의 props와 state에 접근할 수 있다는 점
-    tabContent =selectedButton;
+    setSelectedTopic(selectedButton);
+    console.log(selectedTopic); // (cf.) setSelectedTopic(..)을 호출했을 때 selectedTopic 값이 바로 변경되는 게 아니라 업데이트 스케줄이 조정된다. App()이 다시 실행되기 전에는 값이 아직 예전 그대로 남아있다.
   }
 
   console.log("APP COMPONENT EXECUTING");
@@ -58,7 +67,7 @@ function App() {
                   -JSX 코드를 넘길 것이냐 vs. prop 값만 넘길 것이냐의 문제
                   - 적절한 상황에 더 가독성 좋은 적절한 방법을 선택하면 됨 */}
           </menu>
-          {tabContent}
+          {selectedTopic}
         </section>
       </main>
     </div>
