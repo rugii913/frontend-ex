@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import TabButton from "./TabButton.jsx";
+import Section from "./Section.jsx";
 import { EXAMPLES } from "../data";
 
 export default function Examples() {
@@ -36,8 +37,7 @@ export default function Examples() {
   }
 
   return (
-    <section id="examples">
-      <h2>Examples</h2>
+    <Section title={ "Examples" } id="examples">
       <menu>
         {/* menu는 기본 html 요소 태그임 */}
         {/* <TabButton children="ABCD"></TabButton> 아무 작업도 하지 않아도 children은 받으므로 부자연스럽게 attribute로 넘기지 말 것 */}
@@ -81,6 +81,6 @@ export default function Examples() {
       </menu>
       {tabContent}{" "}
       {/* 조건부 렌더링 세 가지 방법 중 어떤 것을 사용할 것이냐는 선택의 문제 */}
-    </section>
+    </Section>
   );
 }
