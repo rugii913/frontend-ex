@@ -43,7 +43,7 @@ export default function Examples() {
         {/* <TabButton children="ABCD"></TabButton> 아무 작업도 하지 않아도 children은 받으므로 부자연스럽게 attribute로 넘기지 말 것 */}
         <TabButton
           isSelected={selectedTopic === "components"}
-          onSelect={() => handleSelect("components")}
+          onClick={() => handleSelect("components")}
         >
           {/* 
               강의: 이벤트 함수에 커스텀 인자 전달하기 및 퀴즈 3 - 질문 5 관련
@@ -59,19 +59,19 @@ export default function Examples() {
         {/* 컴포넌트 합성(composition)의 한 예시로 볼 수 있음 */}
         <TabButton
           isSelected={selectedTopic === "jsx"}
-          onSelect={() => handleSelect("jsx")}
+          onClick={() => handleSelect("jsx")}
         >
           JSX
         </TabButton>
         <TabButton
           isSelected={selectedTopic === "props"}
-          onSelect={() => handleSelect("props")}
+          onClick={() => handleSelect("props")}
         >
           Props
         </TabButton>
         <TabButton
           isSelected={selectedTopic === "state"}
-          onSelect={() => handleSelect("state")}
+          onClick={() => handleSelect("state")}
         >
           State
         </TabButton>
