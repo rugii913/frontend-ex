@@ -1,8 +1,10 @@
-export default function Tabs({ children, buttons }) {
+export default function Tabs({ children, buttons, buttonsContainer }) {
+    const ButtonsContainer = buttonsContainer; // 이 변수명은 대문자로 시작해야 함
+
     return <>
-        <menu>
+        <ButtonsContainer>
             {buttons}
-        </menu>
+        </ButtonsContainer>
         {children}
     </>
 }
