@@ -40,7 +40,7 @@ export default function Examples() {
   return (
     <Section title={"Examples"} id="examples">
       <Tabs
-        buttonsContainer="menu" // <menu />가 아니라 "menu"로 넘겨야 함, 만약 커스텀 컴포넌트라면 {Section} 이런 식으로 넘겨야 함
+        ButtonsContainer="menu" // <menu />가 아니라 "menu"로 넘겨야 함, 만약 커스텀 컴포넌트라면 {Section} 이런 식으로 넘겨야 함
         buttons={
           <>
             {/* menu는 기본 html 요소 태그임 */}
