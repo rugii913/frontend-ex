@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-export default function Player({ name, symbol }) {
+export default function Player({ initialName, symbol }) {
+  const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEditClick() {
@@ -12,18 +13,22 @@ export default function Player({ name, symbol }) {
     setIsEditing(editing => !editing); // 이렇게 함수 형태를 사용해야 상태가 가장 최신 버전인 것을 보장할 수 있다.
   }
 
-  let playerName = <span className="player-name">{name}</span>;
+  function handleChange(event) {
+    setPlayerName(event.target.value);
+  }
+
+  let editablePlayerName = <span className="player-name">{playerName}</span>;
   let btnCaption = "Edit";
 
   if (isEditing) {
-    playerName = <input type="text" required value={name} />;
+    editablePlayerName = <input type="text" required value={playerName} onChange={handleChange} />;
     btnCaption = "Save";
   }
 
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleEditClick}>{btnCaption}</button> {/* Save <-> Edit 바뀌는 것을 보여주기 위해 삼항 연산자를 이용할 수도 있다. */}
