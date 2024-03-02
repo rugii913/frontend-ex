@@ -12,7 +12,7 @@ export default function GameBoard({ onSelectSquare, turns }) {
     const { row, col } = square;
 
     gameBoard[row][col] = player;
-  }
+  } // 컴포넌트 재실행될 때마다 turns에서 값을 읽어와서 gameBoard에 값들을 배치
 
   // const [gameBoard, setGameBoard] = useState(initialGameBoard); // 이 GameBoard 컴포넌트에서는 상태를 제어하지 않게 할 것
 
@@ -35,10 +35,10 @@ export default function GameBoard({ onSelectSquare, turns }) {
 
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => ( // 왜 인자 두 개를 받는지는 map의 파라미터 확인할 것
         <li key={rowIndex}>
           <ol>
-            {row.map((playerSymbol, colIndex) => (
+            {row.map((playerSymbol, colIndex) => ( // 여기 playerSymbol은 컴포넌트가 재실행될 때마다 위 for문에서 부여된 값임
               <li key={colIndex}>
                 <button
                   onClick={() => onSelectSquare(rowIndex, colIndex)}
