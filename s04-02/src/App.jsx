@@ -5,6 +5,12 @@ import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
 import { WINNING_COMBINATIONS } from "./winning-combinations";
 
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+]; // 상태가 아니므로 함수 밖에 둔다. (계속 관리해줘야하는 변수가 아니라 처음에 한 번 주면 충분한 값임)
+
 function deriveActivePlayer(gameTurns) {
   let currentPlayer = "X";
 
@@ -18,8 +24,24 @@ function deriveActivePlayer(gameTurns) {
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
   // const [activePlayer, setActivePlayer] = useState("X"); // 불필요한 state 제거 - 상태는 최대한 적게 사용하는 게 낫다, 그리고 값은 파생 및 연산으로
+  // const [hasWinner, setHasWinner] = useState(false); // 역시 불필요한 state임, 어차피 handleSelectSquare에서 클릭 이벤트 있을 때마다 App을 재실행하므로, 그 안에서 확인 작업을 진행하면 된다.
 
   const activePlayer = deriveActivePlayer(gameTurns);
+
+  let gameBoard = initialGameBoard;
+
+  for (const turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  } // 컴포넌트 재실행될 때마다 turns에서 값을 읽어와서 gameBoard에 값들을 배치
+
+  for (const combinations of WINNING_COMBINATIONS) {
+    const firstSquareSymbol = TODO
+    const secondSquareSymbol = TODO
+    const thirdSquareSymbol = TODO
+  }
 
   function handleSelectSquare(rowIndex, colIndex) {
     // setActivePlayer((curActivePlayer) => curActivePlayer === "X" ? "O" : "X");
@@ -45,7 +67,7 @@ function App() {
         </ol>
         <GameBoard
           onSelectSquare={handleSelectSquare} 
-          turns={gameTurns}
+          board={gameBoard}
         />
       </div>
       <Log turns={gameTurns}/>
