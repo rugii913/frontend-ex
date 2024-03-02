@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol }) {
+export default function Player({ initialName, symbol, isActive }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -26,7 +26,8 @@ export default function Player({ initialName, symbol }) {
   }
 
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
+    {/* active라는 클래스를 조건부로 추가 - 넘어온 prop isActive가 true이면 className "active"를 주고 false이면 클래스를 추가하지 않도록 undefined */}
       <span className="player">
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
