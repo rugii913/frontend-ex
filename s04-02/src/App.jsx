@@ -8,9 +8,22 @@ function App() {
   const [gameTurns, setGameTurns] = useState([]);
   const [activePlayer, setActivePlayer] = useState("X");
 
-  function handleSelectSquare() {
-    setActivePlayer((curActivePlayer) => curActivePlayer === "X" ? "O" : "X")
-    setGameTurns();
+  function handleSelectSquare(rowIndex, colIndex) {
+    setActivePlayer((curActivePlayer) => curActivePlayer === "X" ? "O" : "X");
+    setGameTurns(prevTurns => {
+      let currentPlayer = "X"; // 상태끼리 서로 영향을 주고 받지 않도록 계산된 값을 권장함
+
+      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+
+      return updatedTurns; // 이 콜백 함수의 반환값이 새 gameTurns로 저장됨 // 이 정도 길이이ㅡ 상태 업데이트 함수는 종종 사용할 수도 있다.
+    });
   }
 
   return (
@@ -22,7 +35,6 @@ function App() {
           <Player initialName="Player 2" symbol="O" isActive={activePlayer === "O"} />
         </ol>
         <GameBoard onSelectSquare={handleSelectSquare} activePlayerSymbol={activePlayer} />
-        {/* 함수 handleSelectSquare를 prop으로 넘겨서 GameBoard의 handleSelectSquare(..)가 호출될 때 같이 호출되도록 한다. */}
       </div>
       <Log />
     </main>
