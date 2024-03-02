@@ -1,12 +1,16 @@
-import Player from "./components/Player";
-import GameBoard from "./components/GameBoard";
 import { useState } from "react";
 
+import Player from "./components/Player";
+import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
+
 function App() {
+  const [gameTurns, setGameTurns] = useState([]);
   const [activePlayer, setActivePlayer] = useState("X");
 
   function handleSelectSquare() {
     setActivePlayer((curActivePlayer) => curActivePlayer === "X" ? "O" : "X")
+    setGameTurns();
   }
 
   return (
@@ -20,7 +24,7 @@ function App() {
         <GameBoard onSelectSquare={handleSelectSquare} activePlayerSymbol={activePlayer} />
         {/* 함수 handleSelectSquare를 prop으로 넘겨서 GameBoard의 handleSelectSquare(..)가 호출될 때 같이 호출되도록 한다. */}
       </div>
-      LOG
+      <Log />
     </main>
   );
 }
