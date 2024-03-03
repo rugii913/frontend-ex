@@ -6,7 +6,12 @@ import Log from "./components/Log";
 import { WINNING_COMBINATIONS } from "./winning-combinations";
 import GameOver from "./components/GameOver";
 
-const initialGameBoard = [
+const PLAYERS = {
+  X: "Player 1",
+  O: "Player 2",
+};
+
+const INITIAL_GAME_BOARD = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -24,19 +29,8 @@ function deriveActivePlayer(gameTurns) {
   return currentPlayer
 } // 헬퍼 함수 - 컴포넌트와 관련된 어떤 상태나 데이터에 접근할 필요가 없으며, 컴포넌트 함수가 재실행될 때 함께 다시 실행될 필요가 없을 때 활용 가능
 
-function App() {
-  const [players, setPlayers] = useState({
-    "X": "Player 1",
-    "O": "Player 2",
-    // (cf.) 여기서 "X", "O" 대신 그냥 X, O로 줘도 동작함
-  });
-  const [gameTurns, setGameTurns] = useState([]);
-  // const [activePlayer, setActivePlayer] = useState("X"); // 불필요한 state 제거 - 상태는 최대한 적게 사용하는 게 낫다, 그리고 값은 파생 및 연산으로
-  // const [hasWinner, setHasWinner] = useState(false); // 역시 불필요한 state임, 어차피 handleSelectSquare에서 클릭 이벤트 있을 때마다 App을 재실행하므로, 그 안에서 확인 작업을 진행하면 된다.
-
-  const activePlayer = deriveActivePlayer(gameTurns);
-
-  let gameBoard = [...initialGameBoard.map(array => [...array])];
+function deriveGameBoard(gameTurns) {
+  let gameBoard = [...INITIAL_GAME_BOARD.map(array => [...array])];
 
   for (const turn of gameTurns) {
     const { square, player } = turn;
@@ -45,6 +39,10 @@ function App() {
     gameBoard[row][col] = player;
   } // 컴포넌트 재실행될 때마다 turns에서 값을 읽어와서 gameBoard에 값들을 배치
 
+  return gameBoard;
+}
+
+function deriveWinner(gameBoard, players) {
   let winner = null;
 
   for (const combination of WINNING_COMBINATIONS) {
@@ -61,6 +59,18 @@ function App() {
     }
   }
 
+  return winner;
+}
+
+function App() {
+  const [players, setPlayers] = useState(PLAYERS);
+  const [gameTurns, setGameTurns] = useState([]);
+  // const [activePlayer, setActivePlayer] = useState("X"); // 불필요한 state 제거 - 상태는 최대한 적게 사용하는 게 낫다, 그리고 값은 파생 및 연산으로
+  // const [hasWinner, setHasWinner] = useState(false); // 역시 불필요한 state임, 어차피 handleSelectSquare에서 클릭 이벤트 있을 때마다 App을 재실행하므로, 그 안에서 확인 작업을 진행하면 된다.
+
+  const activePlayer = deriveActivePlayer(gameTurns);
+  const gameBoard = deriveGameBoard(gameTurns)
+  const winner = deriveWinner(gameBoard, players);
   const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectSquare(rowIndex, colIndex) {
@@ -98,13 +108,13 @@ function App() {
         <ol id="players" className="highlight-player">
           {/* isActive prop으로 boolean 값을 넘김, 여기서 제어하고 있는 상태 activePlayer에 따라 동적으로 */}
           <Player
-            initialName="Player 1"
+            initialName={PLAYERS.X}
             symbol="X"
             isActive={activePlayer === "X"}
             onChangeName={handlePlayerNameChange}
           />
           <Player
-            initialName="Player 2"
+            initialName={PLAYERS.O}
             symbol="O"
             isActive={activePlayer === "O"}
             onChangeName={handlePlayerNameChange}
