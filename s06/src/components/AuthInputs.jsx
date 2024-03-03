@@ -24,15 +24,18 @@ export default function AuthInputs() {
     <div id="auth-inputs">
       <div className="controls">
         <p>
-          <label>Email</label>
+          <label className={`label ${emailNotValid ? "invalid" : ""}`}>Email</label>
           <input
             type="email"
-            className={emailNotValid ? 'invalid' : undefined}
+            // style={{
+            //   backgroundColor: emailNotValid ? "#fed2d2" : "#d1d5db"
+            // }}
+            className={emailNotValid ? 'invalid' : undefined} // cf. className={emailNotValid && "invalid"} 이 방식은 사용하지 말 것, false일 경우 앞을 반환함
             onChange={(event) => handleInputChange('email', event.target.value)}
           />
         </p>
         <p>
-          <label>Password</label>
+          <label className={`label ${passwordNotValid ? "invalid" : ""}`}>Password</label>
           <input
             type="password"
             className={passwordNotValid ? 'invalid' : undefined}
