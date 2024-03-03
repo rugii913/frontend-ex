@@ -25,6 +25,11 @@ function deriveActivePlayer(gameTurns) {
 } // 헬퍼 함수 - 컴포넌트와 관련된 어떤 상태나 데이터에 접근할 필요가 없으며, 컴포넌트 함수가 재실행될 때 함께 다시 실행될 필요가 없을 때 활용 가능
 
 function App() {
+  const [players, setPlayers] = useState({
+    "X": "Player 1",
+    "O": "Player 2",
+    // (cf.) 여기서 "X", "O" 대신 그냥 X, O로 줘도 동작함
+  });
   const [gameTurns, setGameTurns] = useState([]);
   // const [activePlayer, setActivePlayer] = useState("X"); // 불필요한 state 제거 - 상태는 최대한 적게 사용하는 게 낫다, 그리고 값은 파생 및 연산으로
   // const [hasWinner, setHasWinner] = useState(false); // 역시 불필요한 state임, 어차피 handleSelectSquare에서 클릭 이벤트 있을 때마다 App을 재실행하므로, 그 안에서 확인 작업을 진행하면 된다.
@@ -52,7 +57,7 @@ function App() {
       firstSquareSymbol === secondSquareSymbol &&
       firstSquareSymbol === thirdSquareSymbol
     ) {
-      winner = firstSquareSymbol;
+      winner = players[firstSquareSymbol];
     }
   }
 
@@ -76,6 +81,17 @@ function App() {
     setGameTurns([]);
   }
 
+  function handlePlayerNameChange(symbol, newName) {
+    setPlayers(prevPlayers => {
+      return {
+        ...prevPlayers,
+        [symbol]: newName
+      }
+      // 스프레드 연산자 사용 예시 https://velog.io/@tnstjd120/스프레드-연산자spread-operator
+      // ES6 spread vs. rest https://hanamon.kr/javascript-spread-reat/
+    })
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -85,11 +101,13 @@ function App() {
             initialName="Player 1"
             symbol="X"
             isActive={activePlayer === "X"}
+            onChangeName={handlePlayerNameChange}
           />
           <Player
             initialName="Player 2"
             symbol="O"
             isActive={activePlayer === "O"}
+            onChangeName={handlePlayerNameChange}
           />
         </ol>
         {(winner || hasDraw) && (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({ initialName, symbol, isActive, onChangeName }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -11,6 +11,10 @@ export default function Player({ initialName, symbol, isActive }) {
     // 상태 변경 스케줄, 함수 실행 사이클과 관련됨 - 이런 상태 변경은 즉시 실행되지 않으며, 상태의 기준은 항상 현재 상태이다.
     // 즉 이 setIsEditing은 직접 상태를 바꾸는 것이 아니라 상태를 바꾸는 것을 예정(스케줄링)할 뿐이다. -> 두 번 호출되어도 여전히 같은 함수 실행 사이클
     setIsEditing(editing => !editing); // 이렇게 함수 형태를 사용해야 상태가 가장 최신 버전인 것을 보장할 수 있다.
+    
+    if (isEditing) { // 버튼이 클릭됐을 때 isEditing 상태가 true였다면 onChangeName(..) 실행
+      onChangeName(symbol, playerName);
+    }
   }
 
   function handleChange(event) {
