@@ -1,4 +1,11 @@
 import logo from '../assets/logo.png';
+// import './Header.css';
+import classes from './Header.module.css';
+/* 
+- CSS 모듈을 사용했을 때
+  - 장점: jsx 코드와 CSS 코드 분리, 협업 시 유리, CSS가 영향을 미치는 위치를 해당 CSS 파일을 직접 임포트하는 컴포넌트로 스코핑 가능
+  - 단점: CSS를 꼭 알아야만 한다, 작고 많은 CSS 파일들을 갖게 될 가능성이 높다.
+*/
 
 export default function Header() {
   /* 
@@ -10,7 +17,7 @@ export default function Header() {
     <header>
       <img src={logo} alt="A canvas" />
       <h1>ReactArt</h1>
-      <p>A community of artists and art-lovers.</p>
+      <p className={classes.paragraph}>A community of artists and art-lovers.</p>
       {/* 
       <p // style={{
         // color: "red",
