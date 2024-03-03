@@ -1,3 +1,9 @@
+/* 
+- 순수 CSS를 사용했을 때
+  - 장점: jsx 코드와 CSS 코드 분리, 협업 시 유리
+  - 단점: CSS를 꼭 알아야만 한다, CSS 파일이 import한 컴포넌트로 스코핑되지 않음
+*/
+
 * {
   box-sizing: border-box;
 }
