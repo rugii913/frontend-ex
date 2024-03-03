@@ -1,5 +1,11 @@
 import { styled } from "styled-components";
 
+/* 
+- styled components를 사용했을 때
+  - 장점: 추가하기 쉽다, 리액트 안에서 계속 작업할 수 있다(컴포넌트와 거의 같음), 스코핑 명확함
+  - 단점: CSS를 꼭 알아야만 한다, 리액트와 CSS 코드를 분리하기 어렵다, 작은 wrapper 컴포넌트가 많이 생긴다(꼭 나쁜 건 아님, 재사용하기에 좋은 경우도 있긴 함)
+*/
+
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
