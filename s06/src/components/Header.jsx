@@ -19,6 +19,11 @@ export default function Header() {
         // "background-color": "blue", // 가능 - 따옴표로 묶어주기 - 자동 완성은 안 됨 }}
         >A community of artists and art-lovers.</p>
      */}
+     {/*
+     HMTL에 style을 넣는 것과 거의 같긴 하지만, 태그가 아니라 컴포넌트이므로 차이가 있다.
+     {}으로 JS 표현임을 알리고, {color: "red"} 이런 식으로 JS 객체를 넘긴 것임
+     {{}} 자체가 특별한 리액트 기능인 것은 아님
+     */}
     </header>
   );
 }
