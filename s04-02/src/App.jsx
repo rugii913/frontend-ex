@@ -10,7 +10,9 @@ const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
-]; // 상태가 아니므로 함수 밖에 둔다. (계속 관리해줘야하는 변수가 아니라 처음에 한 번 주면 충분한 값임)
+]; // 상태가 아니므로 함수 밖에 둔다.
+// 상태는 아니지만 메모리에서 계속 값이 유지된다.
+// 깊은 복사를 사용해서 이 값을 불변값으로 유지시켜주고, 매 재실행마다 정말로 새로 렌더링하게 한 것
 
 function deriveActivePlayer(gameTurns) {
   let currentPlayer = "X";
