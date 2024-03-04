@@ -18,7 +18,8 @@ function App() {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput, // JS 객체를 스프레드 - 불변성을 위해 깊은 복사
-        [inputIdentifier]: newValue, // inputIdentifier에 해당되는 값만 바꿔치기
+        [inputIdentifier]: +newValue, // inputIdentifier에 해당되는 값만 바꿔치기
+        // 문자열 타입으로 된 숫자 앞에 +를 붙여주면 숫자 타입으로 바뀐다.
       };
       // 참고
       // - JavaScript의 spread operator(전개 구문) 사용하기 https://chanhuiseok.github.io/posts/js-8/
