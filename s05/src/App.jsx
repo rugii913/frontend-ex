@@ -13,6 +13,8 @@ function App() {
     duration: 10,
   });
 
+  const inputIsValid = userInput.duration >= 1;
+
   // 각각의 input마다 연결된 네 개의 함수를 만들 수도 있고, 모든 input과 연결되는 함수 한 개를 만들 수도 있다.
   function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
@@ -31,7 +33,8 @@ function App() {
     <>
       <Header />;
       <UserInput userInput={userInput} onChange={handleChange} />
-      <Results input={userInput} />
+      {!inputIsValid && <p className="center">Please enter a duration greater than zero.</p>}
+      {inputIsValid && <Results input={userInput} />}
     </>
   );
 }
