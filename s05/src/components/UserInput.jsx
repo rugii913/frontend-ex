@@ -13,9 +13,12 @@ export default function UserInput() {
   function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
       return {
-        ...prevUserInput, // JS 객체를 스프레드
+        ...prevUserInput, // JS 객체를 스프레드 - 불변성을 위해 깊은 복사
         [inputIdentifier]: newValue, // inputIdentifier에 해당되는 값만 바꿔치기
       };
+      // 참고
+      // - JavaScript의 spread operator(전개 구문) 사용하기 https://chanhuiseok.github.io/posts/js-8/
+      // - 코어 자바스크립트 - 객체: 기본 중 대괄호 표기법, 계산된 프로퍼티 https://ko.javascript.info/object#ref-214
     });
   }
 
@@ -30,6 +33,11 @@ export default function UserInput() {
             value={userInput.initialInvestment}
             onChange={(event) =>
               handleChange("initialInvestment", event.target.value)
+              /* 
+              - input 컴포넌트의 값 변화 이벤트 발생하면 handleChange 호출하며 inputIdentifier와 newValue를 넘김
+              - 이로 handleChange 호출되어 setUserInput 호출되면 상태 변화 스케줄링
+              - 새로 렌더링할 때 userInput의 새 값이 렌더링
+               */
             }
           />
         </p>
