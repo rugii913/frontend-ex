@@ -37,6 +37,13 @@
 //   );
 // }
 
+/* 
+- tailwindcss를 사용했을 때
+  - 장점: CSS를 몰라도 된다, 빠른 개발 속도, 자동 완성 도움 받을 수 있음, 스타일끼리 충돌 가능성 거의 없음, 커스터마이징도 가능은 함
+  - 단점: JSX 코드에 뭔가를 추가해야 한다(JSX와 스타일 간 분리가 안 됨),
+          클래스 이름이 너무 길어진다(하지만 보통 상위 컴포넌트에서는 스타일 때문에 클래스 이름이 길어지는 경우가 거의 없음)
+          작은 래퍼 컴포넌트들이 많아진다(하지만 리액트에서는 오히려 당연한 부분임)
+*/
 export default function Input({label, invalid, ...props}) {
   let labelClasses = "block mb-2 text-xs font-bold tracking-wide uppercase"
   let inputClasses = "w-full px-3 py-2 leading-tight  border rounded shadow"
