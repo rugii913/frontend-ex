@@ -70,6 +70,7 @@ function App() {
   const ctxValue = {
     items: shoppingCart.items,
     addItemToCard: handleAddItemToCart,
+    updateItemQuantity: handleUpdateCartItemQuantity,
   };
 
   return (
@@ -82,14 +83,11 @@ function App() {
           - 즉, XxxContext.Provider 안에 있지 않은 컴포넌트가 컨텍스트 value에 접근할 때 사용되는 값
       */}
       {/* 특정 오브젝트 안에 중첩된 속성이 실질적인 컴포넌트가 되는 경우, 이런 식으로 Xxx.Yyy 역시 JSX 파일로 유효함 */}
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
+      <Header />
       <Shop>
         {DUMMY_PRODUCTS.map((product) => (
           <li key={product.id}>
-            <Product {...product} onAddToCart={handleAddItemToCart} />
+            <Product {...product} />
           </li>
         ))}
       </Shop>
