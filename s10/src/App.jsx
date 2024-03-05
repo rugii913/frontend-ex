@@ -67,8 +67,14 @@ function App() {
     });
   }
 
+  const ctxValue = {
+    items: shoppingCart.items,
+    addItemToCard: handleAddItemToCart,
+  };
+
   return (
-    <CartContext.Provider value={{ items: [] }}> {/* {{ items: [] }} 였던 것을 상태와 연결시켜 동적으로 만든다. */}
+    // <CartContext.Provider value={shoppingCart}> {/* {{ items: [] }} 였던 것을 상태와 연결시켜 동적으로 만든다. */}
+    <CartContext.Provider value={ctxValue}> {/* 함수까지 함께 넘긴다. */}
       {/* 
       - shopping-cart-context의 CartContext에 { items: [] }을 준 것과는 별개로 여기 컨텍스트의 Provider에 꼭 value prop을 넣어줘야 동작한다. 
         - shopping-cart-context의 CartContext에 지정해준 것은 스키마 같은 거라고 생각하면 될 것 같다. - 자동 완성 등 잘 됨
