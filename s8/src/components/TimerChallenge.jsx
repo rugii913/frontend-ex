@@ -25,7 +25,7 @@ export default function TimerChallenge({ title, targetTime }) {
   function handleStart() {
     timer.current = setTimeout(() => {
       setTimerExpired(true);
-      dialog.current.showModal(); /* JS는 dialog DOM 요소의 showModal() 메서드를 호출할 수 있다.(표준 브라우저 기능) https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#accessibility_concerns */
+      dialog.current.open();
     }, targetTime * 1000);
 
     setTimerStarted(true); // 위 코드보다 뒤에 있어도 상관이 없다.
