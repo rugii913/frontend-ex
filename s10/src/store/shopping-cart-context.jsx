@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 
 import { DUMMY_PRODUCTS } from "../dummy-products.js";
 
@@ -8,10 +8,21 @@ export const CartContext = createContext({
   updateItemQuantity: () => {},
 }); // createContext로 만들어지는 값은 실은 리액트 컴포넌트를 포함한 객체임 - 그대로 대문자로 시작
 
+function shoppingCartReducer(state, action) {
+  // 앞서 만든 값, 속성에 직접 접근할 필요가 없는 함수이며, 함수를 매번 재생성하지 않기 위해 컴포넌트 함수 바깥에 만들어줌
+  // 직접 접근하지 않고, useReducer에 전달되어 그 곳에서 값을 받는다.
+  return state;
+}
+
 export default function CartContextProvider({ children }) {
-  const [shoppingCart, setShoppingCart] = useState({
-    items: [],
-  });
+  const [shoppingCartState, shoppingCartDispatch] = useReducer(
+    shoppingCartReducer,
+    {
+      items: [],
+    }
+  );
+
+  const [shoppingCart, setShoppingCart] = useState();
 
   function handleAddItemToCart(id) {
     setShoppingCart((prevShoppingCart) => {
@@ -70,7 +81,7 @@ export default function CartContextProvider({ children }) {
   }
 
   const ctxValue = {
-    items: shoppingCart.items,
+    items: shoppingCartState.items,
     addItemToCard: handleAddItemToCart,
     updateItemQuantity: handleUpdateCartItemQuantity,
   };
