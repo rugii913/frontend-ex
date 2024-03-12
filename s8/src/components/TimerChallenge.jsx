@@ -1,10 +1,16 @@
 import { useState } from "react";
 
+let timer;
+// - let 변수인 타이머를 함수 컴포넌트 밖에 선언했을 때의 문제점
+//   - 모든 컴포넌트 인스턴스들이 공유한다.
+//   - 한 타이머가 실행된 상태에서 다른 도전 타이머를 또 실행시키면 원래 타이머가 버려진다.
+// - component 바깥에 let 변수를 선언하면 안 되는 이유
+
 export default function TimerChallenge({ title, targetTime }) {
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
 
-  let timer;
+  // let timer;
   // - let 변수인 타이머를 함수 컴포넌트 안에 선언했을 때의 문제점
   //   - 버튼을 누르면서 상태를 set하고 컴포넌트가 재실행, timer 변수도 새로 생성됨
   //   - handleStart()의 타이머와 handleStop()의 타이머가 서로 다른 타이머가 된다.
