@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 
 const ResultModal = forwardRef(function ResultModal( /* forwardRef() 메서드에 prop 부분 수정한 원래의 컴포넌트를 원래 컴포넌트 이름으로 export  */
-  { targetTime, remainingTime },
+  { targetTime, remainingTime, onReset},
   ref
 ) {
   const dialog = useRef();
@@ -28,7 +28,7 @@ const ResultModal = forwardRef(function ResultModal( /* forwardRef() 메서드�
       <p>
         You stopped the timer with <strong>{formattedRemainingTime} seconds left.</strong>
       </p>
-      <form method="dialog">
+      <form method="dialog" onSubmit={onReset}>
         <button>Close</button>
       </form>
     </dialog>

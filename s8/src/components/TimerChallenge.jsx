@@ -20,7 +20,6 @@ export default function TimerChallenge({ title, targetTime }) {
 
   if (timeRemaining <= 0) {
     clearInterval(timer.current);
-    setTimeRemaining(targetTime * 1000);
     // **주의** 컴포넌트에서 바로 state 수정 함수를 호출하는 건 무한 루프를 만들 수 있으므로 위험하다, 여기서는 if 조건이 있으므로 무한 루프에 빠지진 않을 것이다.
     dialog.current.open();
   }
@@ -29,6 +28,10 @@ export default function TimerChallenge({ title, targetTime }) {
   // - let 변수인 타이머를 함수 컴포넌트 안에 선언했을 때의 문제점
   //   - 버튼을 누르면서 상태를 set하고 컴포넌트가 재실행, timer 변수도 새로 생성됨
   //   - handleStart()의 타이머와 handleStop()의 타이머가 서로 다른 타이머가 된다.
+
+  function handleReset() {
+    setTimeRemaining(targetTime * 1000);
+  }
 
   function handleStart() {
     /*
@@ -47,7 +50,6 @@ export default function TimerChallenge({ title, targetTime }) {
     // clearTimeout(timer.current);
     dialog.current.open();
     clearInterval(timer.current);
-    setTimeRemaining(targetTime * 1000);
   }
 
   return (
@@ -56,6 +58,7 @@ export default function TimerChallenge({ title, targetTime }) {
         ref={dialog}
         targetTime={targetTime}
         remainingTime={timeRemaining}
+        onReset={handleReset}
       />
       <section className="challenge">
         <h2>{title}</h2>
