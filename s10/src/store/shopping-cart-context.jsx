@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 
 import { DUMMY_PRODUCTS } from "../dummy-products.js";
 
@@ -11,6 +11,62 @@ export const CartContext = createContext({
 function shoppingCartReducer(state, action) {
   // 앞서 만든 값, 속성에 직접 접근할 필요가 없는 함수이며, 함수를 매번 재생성하지 않기 위해 컴포넌트 함수 바깥에 만들어줌
   // 직접 접근하지 않고, useReducer에 전달되어 그 곳에서 값을 받는다.
+  if (action.type === "ADD_ITEM") {
+    const updatedItems = [...state.items]; // 항상 메모리에 있는 값을 직접 바꾸지 말아라, ...으로 복사해서 사용해라
+
+    const existingCartItemIndex = updatedItems.findIndex(
+      (cartItem) => cartItem.id === action.payload
+    );
+    const existingCartItem = updatedItems[existingCartItemIndex];
+
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        quantity: existingCartItem.quantity + 1,
+      };
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      const product = DUMMY_PRODUCTS.find(
+        (product) => product.id === action.payload
+      );
+      updatedItems.push({
+        id: action.payload,
+        name: product.title,
+        price: product.price,
+        quantity: 1,
+      });
+    }
+
+    return {
+      // ...state, // 만약 다른 상태들도 있었다면, 다른 상태는 변경하지 않도록 처리
+      items: updatedItems,
+    };
+  }
+
+  if (action.type === "UPDATE_ITEM") {
+    const updatedItems = [...state.items];
+    const updatedItemIndex = updatedItems.findIndex(
+      (item) => item.id === action.payload.productId
+    );
+
+    const updatedItem = {
+      ...updatedItems[updatedItemIndex],
+    };
+
+    updatedItem.quantity += action.payload.amount;
+
+    if (updatedItem.quantity <= 0) {
+      updatedItems.splice(updatedItemIndex, 1);
+    } else {
+      updatedItems[updatedItemIndex] = updatedItem;
+    }
+
+    return {
+      // ...state, // 만약 다른 상태들도 있었다면, 다른 상태는 변경하지 않도록 처리
+      items: updatedItems,
+    };
+  }
+
   return state;
 }
 
@@ -22,61 +78,20 @@ export default function CartContextProvider({ children }) {
     }
   );
 
-  const [shoppingCart, setShoppingCart] = useState();
-
   function handleAddItemToCart(id) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
-
-      const existingCartItemIndex = updatedItems.findIndex(
-        (cartItem) => cartItem.id === id
-      );
-      const existingCartItem = updatedItems[existingCartItemIndex];
-
-      if (existingCartItem) {
-        const updatedItem = {
-          ...existingCartItem,
-          quantity: existingCartItem.quantity + 1,
-        };
-        updatedItems[existingCartItemIndex] = updatedItem;
-      } else {
-        const product = DUMMY_PRODUCTS.find((product) => product.id === id);
-        updatedItems.push({
-          id: id,
-          name: product.title,
-          price: product.price,
-          quantity: 1,
-        });
-      }
-
-      return {
-        items: updatedItems,
-      };
+    shoppingCartDispatch({
+      type: "ADD_ITEM", // 대문자에 _ 사용은 관습, 소문자에 - 사용해도 상관은 없다.
+      payload: id, // 보통 payload라 많이 씀, id라 해도 상관 없다.
     });
   }
 
   function handleUpdateCartItemQuantity(productId, amount) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
-      const updatedItemIndex = updatedItems.findIndex(
-        (item) => item.id === productId
-      );
-
-      const updatedItem = {
-        ...updatedItems[updatedItemIndex],
-      };
-
-      updatedItem.quantity += amount;
-
-      if (updatedItem.quantity <= 0) {
-        updatedItems.splice(updatedItemIndex, 1);
-      } else {
-        updatedItems[updatedItemIndex] = updatedItem;
-      }
-
-      return {
-        items: updatedItems,
-      };
+    shoppingCartDispatch({
+      type: "UPDATE_ITEM",
+      payload: {
+        productId, // productId: productId, // JS 문법: 속성 이름이 변수 이름과 같으면 속성 이름 명시 안 해줘도 알아서 객체로 담음
+        amount, // amount: amount,
+      },
     });
   }
 
