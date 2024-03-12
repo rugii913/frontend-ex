@@ -14,8 +14,16 @@ export default function TimerChallenge({ title, targetTime }) {
   //   → **참조의 또다른 특별한 기능**: refs는 state와 마찬가지로 component 재실행 시 유실되지 않는다
   const dialog = useRef();
 
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [timerExpired, setTimerExpired] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(targetTime * 1000);
+  
+  const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
+
+  if (timeRemaining <= 0) {
+    clearInterval(timer.current);
+    setTimeRemaining(targetTime * 1000);
+    // **주의** 컴포넌트에서 바로 state 수정 함수를 호출하는 건 무한 루프를 만들 수 있으므로 위험하다, 여기서는 if 조건이 있으므로 무한 루프에 빠지진 않을 것이다.
+    dialog.current.open();
+  }
 
   // let timer;
   // - let 변수인 타이머를 함수 컴포넌트 안에 선언했을 때의 문제점
@@ -23,16 +31,23 @@ export default function TimerChallenge({ title, targetTime }) {
   //   - handleStart()의 타이머와 handleStop()의 타이머가 서로 다른 타이머가 된다.
 
   function handleStart() {
+    /*
     timer.current = setTimeout(() => {
       setTimerExpired(true);
       dialog.current.open();
     }, targetTime * 1000);
-
-    setTimerStarted(true); // 위 코드보다 뒤에 있어도 상관이 없다.
+    // setTimeout() vs. setInterval()
+    */
+    timer.current = setInterval(() => {
+      setTimeRemaining(prevTimeRemaining => prevTimeRemaining - 10);
+    }, 10)
   }
 
   function handleStop() {
-    clearTimeout(timer.current);
+    // clearTimeout(timer.current);
+    dialog.current.open();
+    clearInterval(timer.current);
+    setTimeRemaining(targetTime * 1000);
   }
 
   return (
@@ -44,12 +59,12 @@ export default function TimerChallenge({ title, targetTime }) {
           {targetTime} second{targetTime > 1 ? "s" : ""}
         </p>
         <p>
-          <button onClick={timerStarted ? handleStop : handleStart}>
-            {timerStarted ? "Stop" : "Start"} Challenge
+          <button onClick={timerIsActive ? handleStop : handleStart}>
+            {timerIsActive ? "Stop" : "Start"} Challenge
           </button>
         </p>
-        <p className={timerStarted ? "active" : undefined}>
-          {timerStarted ? "Time is running..." : "Timer inactive"}
+        <p className={timerIsActive ? "active" : undefined}>
+          {timerIsActive ? "Time is running..." : "Timer inactive"}
         </p>
       </section>
     </>
