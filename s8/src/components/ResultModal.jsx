@@ -1,4 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const ResultModal = forwardRef(function ResultModal( /* forwardRef() 메서드에 prop 부분 수정한 원래의 컴포넌트를 원래 컴포넌트 이름으로 export  */
   { targetTime, remainingTime, onReset},
@@ -18,7 +19,7 @@ const ResultModal = forwardRef(function ResultModal( /* forwardRef() 메서드�
     };
   });
 
-  return (
+  return createPortal(
     <dialog ref={dialog} className="result-modal" onClose={onReset}>
       {/* 모든 내장 컴포넌트는 ref 속성을 갖고 있다 - 커스텀 컴포넌트끼리 주고 받을 때는 forwardRef를 사용해야만 한다 */}
       {/* (cf.) dialog는 HTML 기본 지원 태그, dialog는 open 속성이 없으면 안 보임, 그런데 open으로 둘 경우 흐린 배경(backdrop)이 안 나타남 */}
@@ -33,7 +34,8 @@ const ResultModal = forwardRef(function ResultModal( /* forwardRef() 메서드�
       <form method="dialog" onSubmit={onReset}>
         <button>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById("modal"),
   );
 });
 
