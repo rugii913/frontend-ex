@@ -4,8 +4,13 @@ export default function TimerChallenge({ title, targetTime }) {
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
 
+  let timer;
+  // - let 변수인 타이머를 함수 컴포넌트 안에 선언했을 때의 문제점
+  //   - 버튼을 누르면서 상태를 set하고 컴포넌트가 재실행, timer 변수도 새로 생성됨
+  //   - handleStart()의 타이머와 handleStop()의 타이머가 서로 다른 타이머가 된다.
+
   function handleStart() {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setTimerExpired(true);
     }, targetTime * 1000);
 
@@ -13,7 +18,7 @@ export default function TimerChallenge({ title, targetTime }) {
   }
 
   function handleStop() {
-    // 여기서 handleStart()에 있는 타이머를 어떻게 관리할 수 있는가?
+    clearTimeout(timer);
   }
 
   return (
@@ -24,7 +29,7 @@ export default function TimerChallenge({ title, targetTime }) {
         {targetTime} second{targetTime > 1 ? "s" : ""}
       </p>
       <p>
-        <button onClick={handleStart}>
+        <button onClick={timerStarted ? handleStop : handleStart}>
           {timerStarted ? "Stop" : "Start"} Challenge
         </button>
       </p>
