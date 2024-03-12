@@ -12,6 +12,7 @@ export default function TimerChallenge({ title, targetTime }) {
   // - 컴포넌트 함수 안에 있으므로 특정 컴포넌트 인스턴스에만 할당되며,
   // - component가 재실행될 때도 같은 주소를 그대로 바라본다.(리액트가 알아서 해결해주는 부분)
   //   → **참조의 또다른 특별한 기능**: refs는 state와 마찬가지로 component 재실행 시 유실되지 않는다
+  const dialog = useRef();
 
   const [timerStarted, setTimerStarted] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
@@ -24,6 +25,7 @@ export default function TimerChallenge({ title, targetTime }) {
   function handleStart() {
     timer.current = setTimeout(() => {
       setTimerExpired(true);
+      dialog.current.showModal(); /* JS는 dialog DOM 요소의 showModal() 메서드를 호출할 수 있다.(표준 브라우저 기능) https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#accessibility_concerns */
     }, targetTime * 1000);
 
     setTimerStarted(true); // 위 코드보다 뒤에 있어도 상관이 없다.
@@ -35,7 +37,7 @@ export default function TimerChallenge({ title, targetTime }) {
 
   return (
     <>
-      {timerExpired && <ResultModal targetTime={targetTime} result="lost" />}
+      <ResultModal ref={dialog} targetTime={targetTime} result="lost" />
       <section className="challenge">
         <h2>{title}</h2>
         <p className="challenge-time">
