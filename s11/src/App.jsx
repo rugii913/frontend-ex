@@ -7,11 +7,41 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from './loc.js';
 
+const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+const storedPlaces = storedIds.map((id) =>
+  AVAILABLE_PLACES.find((place) => place.id === id)
+);
+
 function App() {
+  /*
+  // component가 재실행될 때마다 이 코드가 재실행될 필요도 없다.
+  // 어플리케이션 전체 생명 주기에서 단 한 번만 실행되어도 상관 없다.
+  const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+  const storedPlaces = storedIds.map((id) =>
+    AVAILABLE_PLACES.find((place) => place.id === id)
+  );
+  */
+
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
+
+  /*
+  // 불필요한 useEffect의 예시
+  // - 이 코드는 싱크가 맞게, 즉시 실행된다.
+  //   - 콜백 함수나 프로미스 같은 게 없다.
+  //   - 한 줄씩 차례대로 그대로 실행된다.
+  useEffect(() => {
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    const storedPlaces = storedIds.map((id) =>
+      AVAILABLE_PLACES.find((place) => place.id === id)
+    );
+
+    setPickedPlaces(storedPlaces);
+    // 그렇다고 하더라도 이 부분은 무한 루프를 유발할 수 있으므로 위로 올릴 때 없애야 한다. state 업데이트를 이용하는 게 아니라 재실행 시의 초기값을 이용해야 한다.
+  }, []);
+  */
 
   // 1. 리액트는 component 함수의 실행이 완료된 후에 useEffect()에 전달된 함수를 실행한다.
   // 2. useEffect()가 실행되면서 state를 업데이트한다.
@@ -82,6 +112,12 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     modal.current.close();
+
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    localStorage.setItem(
+      "selectedPlaces",
+      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+    );
   }
 
   return (
