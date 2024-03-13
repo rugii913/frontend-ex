@@ -4,6 +4,12 @@ import { createPortal } from 'react-dom';
 function Modal({ open, children }) {
   const dialog = useRef();
 
+  if (open) {
+    dialog.current.showModal();
+  } else {
+    dialog.current.close();
+  }
+
   return createPortal(
     <dialog className="modal" ref={dialog} open={open}>
       {children}
