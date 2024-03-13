@@ -47,6 +47,7 @@ function App() {
   }
 
   function handleSelectPlace(id) {
+    // - 이 부분은 JSX 스냅샷으로 바로 이어지지만
     setPickedPlaces((prevPickedPlaces) => {
       if (prevPickedPlaces.some((place) => place.id === id)) {
         return prevPickedPlaces;
@@ -54,6 +55,26 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    /*
+    - 이 부분은 JSX와 직접 연관되지 않으므로 side effect이다.
+    - 그런데 이 코드를 useEffect()로 묶어줄 필요는 없다.
+      - 우선 function component안의 function 안에 있는 코드이므로 useEffect()를 애초에 사용할 수 없다.(hook 규칙 위반)
+      - 코드 내에서 state를 업데이트하지 않으므로 무한 루프에 빠지는 것과 관련이 없다.
+      - 설령 이 코드가 state를 업데이트한다고 하더라도 component 함수가 재실행될 때가 아니라 사용자 입력이 있을 때만 실행되므로 무한 루프에 빠지지 않는다.
+    */
+    /* 
+    - useEffect() hook은
+      (1) 무한 루프 방지용 (2) 컴포넌트 함수가 최소 한 번 실행된 이후에 작동해야하는 코드인 경우
+      사용함을 명심
+    */
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    if (storedIds.indexOf(id) === -1) {
+      localStorage.setItem(
+        "selectedPlaces",
+        JSON.stringify([id, ...storedIds]) // localStorage에 저장되는 데이터도 문자열 형태여야함
+      );
+    }
   }
 
   function handleRemovePlace() {
