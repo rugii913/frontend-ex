@@ -5,11 +5,27 @@ import { AVAILABLE_PLACES } from './data.js';
 import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
+import { sortPlacesByDistance } from './loc.js';
 
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState([]);
+
+  /*
+  - 아래 코드 전체가 side effects이다. 왜??
+    - 사용자의 위치 파악하는 코드 => 앱에 필요하긴 하지만 컴포넌트 함수의 주된 목적과는 직접적인 연관성이 없음
+    - 또한 () 안의 콜백 함수는 바로 완료되지 않으며, 이 컴포넌트의 다른 함수들이 모두 실행 완료된 후 실행될 것
+  - (cf.) 모든 컴포넌트 함수의 주된 목적은 렌더링 가능한 JSX 코드를 반환하는 것
+    - 현재 이 컴포넌트의 다른 코드들은 컴포넌트가 리턴하는 JSX와 직접 연관된 부분 (ex.) 이벤트 리스너, state 설정
+  */
+  navigator.geolocation.getCurrentPosition((position) => { /* (cf.) navigator는 브라우저가 제공하는 객체 */
+    const sortedPlaces = sortPlacesByDistance(
+      AVAILABLE_PLACES,
+      position.coords.latitude,
+      position.coords.longitude
+    );
+  });
 
   function handleStartRemovePlace(id) {
     modal.current.open();
